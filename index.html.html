@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة حماية المستهلك - بلاغات المواطنين والأسعار</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Cairo -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <!-- html2canvas for generating warning cards -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        body { font-family: 'Cairo', sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #b91c1c 0%, #991b1b 100%); }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col justify-between">
+
+    <!-- Header / Navbar -->
+    <header class="gradient-bg text-white shadow-lg border-b-4 border-amber-400">
+        <div class="max-w-7xl mx-auto px-4 py-5 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <div class="bg-white text-red-700 p-3 rounded-2xl text-2xl shadow-md">🛡️</div>
+                <div>
+                    <h1 class="text-2xl md:text-3xl font-black tracking-wide">منصة حماية المستهلك</h1>
+                    <p class="text-xs md:text-sm text-amber-200 font-bold mt-0.5">
+                        📐 إعداد: أ. هناء عسكر &nbsp;|&nbsp; 💻 تصميم وبرمجة: م. محمد الدروقي
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Quick Action Bar -->
+            <div class="flex items-center gap-3">
+                <button onclick="copyPromoPost()" class="bg-white/10 hover:bg-white/20 text-white px-4 py-2.5 rounded-xl text-xs font-bold border border-white/30 backdrop-blur transition flex items-center gap-2">
+                    <span>📋</span> نسخ منشور النشر والتوعية
+                </button>
+                <a href="https://forms.gle/m2tHTgmDm7NjXiyP7" target="_blank" class="bg-amber-400 hover:bg-amber-500 text-slate-950 px-5 py-2.5 rounded-xl text-xs font-black shadow-lg transition">
+                    + تقديم بلاغ رسمي ↗
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 py-8 flex-grow w-full space-y-8">
+
+        <!-- Navigation Tabs -->
+        <div class="bg-white p-2 rounded-2xl shadow-sm border border-slate-200 flex flex-col sm:flex-row gap-2">
+            <button id="btn-tab-gform" onclick="switchTab('gform')" class="flex-1 py-3.5 px-6 text-center font-black rounded-xl bg-red-700 text-white transition shadow-md flex justify-center items-center gap-2">
+                <span>📝</span> تقديم بلاغ رسمي مباشر (Google Form)
+            </button>
+            <button id="btn-tab-card" onclick="switchTab('card')" class="flex-1 py-3.5 px-6 text-center font-bold rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 transition flex justify-center items-center gap-2">
+                <span>🎨</span> صانع بطاقات التحذير والمشاركة المجتمعية
+            </button>
+        </div>
+
+        <!-- TAB 1: DIRECT FORM LINK SECTION (NO IFRAME ERRORS) -->
+        <div id="tab-content-gform" class="bg-white rounded-3xl shadow-xl border border-slate-200 p-8 text-center space-y-6">
+            <div class="max-w-2xl mx-auto space-y-4">
+                <div class="w-20 h-20 bg-red-100 text-red-700 rounded-full flex items-center justify-center text-4xl mx-auto shadow-inner">
+                    📋
+                </div>
+                <h2 class="text-2xl font-black text-slate-900">نموذج تسجيل البلاغات والمخالفات التجارية الرسمية</h2>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                    يسهم هذا النموذج في إيصال بلاغاتك وملاحظاتك بخصوص الغلاء، السلع المنتهية الصلاحية، والغش التجاري مباشرة إلى قاعدة البيانات المعتمدة لضمان متابعتها.
+                </p>
+                
+                <div class="bg-amber-50 border border-amber-200 p-4 rounded-2xl text-xs text-amber-900 text-right space-y-2 max-w-lg mx-auto">
+                    <p class="font-bold">💡 إرشادات لتقديم البلاغ:</p>
+                    <ul class="list-disc list-inside space-y-1 text-amber-800">
+                        <li>تأكد من كتابة اسم المحل والمنطقة بالتحديد.</li>
+                        <li>حدد نوع المخالفة بدقة (أسعار، صلاحية، جودة).</li>
+                        <li>البلاغات المسجلة تصل فوراً عبر البريد الإلكتروني للمشرفين.</li>
+                    </ul>
+                </div>
+
+                <div class="pt-4">
+                    <a href="https://forms.gle/m2tHTgmDm7NjXiyP7" target="_blank" class="inline-flex items-center gap-3 bg-red-700 hover:bg-red-800 text-white text-lg font-black px-10 py-5 rounded-2xl shadow-xl hover:shadow-2xl hover:scale-105 transition transform">
+                        <span>🚀</span> اضغط هنا لفتح نموذج تقديم البلاغ الرسمي ↗
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: WARNING CARD GENERATOR -->
+        <div id="tab-content-card" class="bg-white rounded-3xl shadow-xl border border-slate-200 p-6 md:p-8 hidden space-y-8">
+            <div class="border-b pb-4">
+               <h2 class="text-xl font-black text-slate-900 flex items-center gap-2">
+                   <span>🖼️</span> صانع بطاقات التنبيه والمشاركة على فيسبوك وواتساب
+               </h2>
+               <p class="text-sm text-slate-500 mt-1">أدخل بيانات المخالفة لتوليد بطاقة موثقة يمكن نشرها لتوعية المواطنين.</p>
+            </div>
+
+            <form id="cardForm" onsubmit="generateWarningCard(event)" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-2">اسم المحل أو النشاط التجاري *</label>
+                    <input type="text" id="shopName" required placeholder="مثال: سوبرماركت الخير..." class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-red-500 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-2">المنطقة / العنوان *</label>
+                    <input type="text" id="location" required placeholder="مثال: أبوسليم - طريق المطار..." class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-red-500 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-2">نوع المخالفة *</label>
+                    <select id="violationType" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-red-500 focus:outline-none">
+                        <option value="غلاء أسعار مبالغ فيه">غلاء أسعار مبالغ فيه</option>
+                        <option value="سلع منتهية الصلاحية">سلع منتهية الصلاحية</option>
+                        <option value="بضاعة مغشوشة أو مقلدة">بضاعة مغشوشة أو مقلدة</option>
+                        <option value="عدم إعلان الأسعار">عدم إعلان الأسعار</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-2">تفاصيل المخالفة</label>
+                    <input type="text" id="details" placeholder="مثال: زيادة السعر بنسبة 50% عن التسعيرة..." class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-red-500 focus:outline-none">
+                </div>
+
+                <div class="md:col-span-2">
+                    <button type="submit" class="w-full bg-red-700 hover:bg-red-800 text-white font-black py-4 rounded-xl shadow-lg transition flex justify-center items-center gap-2">
+                        <span>✨</span> إنتاج بطاقة التحذير الآن
+                    </button>
+                </div>
+            </form>
+
+            <!-- Card Preview Box -->
+            <div id="cardPreviewArea" class="hidden pt-6 border-t space-y-6">
+                <div id="warningCard" class="bg-slate-950 text-white p-6 rounded-3xl shadow-2xl border-4 border-red-600 max-w-md mx-auto space-y-4 relative">
+                    <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                        <span class="text-[10px] bg-red-600 text-white px-3 py-1 rounded-full font-black">⚠️ بلاغ مواطن موثق</span>
+                        <span class="text-[10px] text-slate-400" id="cardDate">--/--/----</span>
+                    </div>
+                    <div>
+                        <h4 class="text-2xl font-black text-amber-400" id="cardShopName">اسم المحل</h4>
+                        <p class="text-xs text-slate-300 mt-1" id="cardLocation">📍 العنوان</p>
+                    </div>
+                    <div class="bg-slate-900 p-4 rounded-2xl border border-slate-800 space-y-2">
+                        <p class="text-sm font-bold text-red-400" id="cardViolationType">نوع المخالفة</p>
+                        <p class="text-xs text-slate-300 leading-relaxed" id="cardDetails">التفاصيل...</p>
+                    </div>
+                    <div class="pt-3 border-t border-slate-800 text-center space-y-1">
+                        <p class="text-[10px] text-amber-300 font-bold">إعداد: أ. هناء عسكر | تصميم وبرمجة: م. محمد الدروقي</p>
+                        <p class="text-[9px] text-slate-500">منصة بلاغات حماية المستهلك - معاً لحماية الأسواق</p>
+                    </div>
+                </div>
+
+                <!-- Export Action Buttons -->
+                <div class="flex flex-wrap justify-center gap-3">
+                    <button onclick="downloadCardImage()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2.5 rounded-xl text-xs font-bold shadow transition flex items-center gap-2">
+                        📥 تنزيل كصورة عالية الدقة (PNG)
+                    </button>
+                    <button onclick="shareWhatsApp()" class="bg-green-600 hover:bg-green-700 text-white px-5 py-2.5 rounded-xl text-xs font-bold shadow transition flex items-center gap-2">
+                        💬 مشاركة عبر واتساب
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer with Full Branding Credits -->
+    <footer style="background-color: #0f172a; color: #ffffff; text-align: center; padding: 25px 15px; margin-top: 40px; border-top: 5px solid #dc2626; width: 100%;">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <p style="font-size: 17px; font-weight: 800; margin-bottom: 8px; line-height: 1.6;">
+                📐 إعداد: <span style="color: #fbbf24;">أ. هناء عسكر</span> &nbsp;|&nbsp; 💻 تصميم وبرمجة: <span style="color: #fbbf24;">م. محمد الدروقي</span>
+            </p>
+            <p style="font-size: 13px; color: #94a3b8; margin: 0;">منصة بلاغات حماية المستهلك &copy; 2026 - جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+
+    <!-- App Logic Scripts -->
+    <script>
+        // Tab Switcher Function
+        function switchTab(tab) {
+            const gformTab = document.getElementById('tab-content-gform');
+            const cardTab = document.getElementById('tab-content-card');
+            const btnGform = document.getElementById('btn-tab-gform');
+            const btnCard = document.getElementById('btn-tab-card');
+
+            if (tab === 'gform') {
+                gformTab.classList.remove('hidden');
+                cardTab.classList.add('hidden');
+                btnGform.className = "flex-1 py-3.5 px-6 text-center font-black rounded-xl bg-red-700 text-white transition shadow-md flex justify-center items-center gap-2";
+                btnCard.className = "flex-1 py-3.5 px-6 text-center font-bold rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 transition flex justify-center items-center gap-2";
+            } else {
+                cardTab.classList.remove('hidden');
+                gformTab.classList.add('hidden');
+                btnCard.className = "flex-1 py-3.5 px-6 text-center font-black rounded-xl bg-red-700 text-white transition shadow-md flex justify-center items-center gap-2";
+                btnGform.className = "flex-1 py-3.5 px-6 text-center font-bold rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 transition flex justify-center items-center gap-2";
+            }
+        }
+
+        // Generate Warning Card Function
+        function generateWarningCard(e) {
+            e.preventDefault();
+            document.getElementById('cardShopName').innerText = document.getElementById('shopName').value;
+            document.getElementById('cardLocation').innerText = '📍 ' + document.getElementById('location').value;
+            document.getElementById('cardViolationType').innerText = '⚠️ ' + document.getElementById('violationType').value;
+            document.getElementById('cardDetails').innerText = document.getElementById('details').value || 'بلاغ عن مخالفة تجارية وغلاء أسعار.';
+            document.getElementById('cardDate').innerText = new Date().toLocaleDateString('ar-LY');
+            
+            document.getElementById('cardPreviewArea').classList.remove('hidden');
+            document.getElementById('cardPreviewArea').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Download Image Card
+        function downloadCardImage() {
+            const card = document.getElementById('warningCard');
+            html2canvas(card, { scale: 3 }).then(canvas => {
+                const a = document.createElement('a');
+                a.href = canvas.toDataURL('image/png');
+                a.download = 'بطاقة-بلاغ-مستهلك.png';
+                a.click();
+            });
+        }
+
+        // Share Text via WhatsApp
+        function shareWhatsApp() {
+            const text = encodeURIComponent("⚠️ تنبيه بلاغ حماية المستهلك:\nتم رصد مخالفة تجارية، بلغ معنا لحماية الأسواق والمستهلك عبر الرابط الرسمي:\nhttps://forms.gle/m2tHTgmDm7NjXiyP7");
+            window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+        }
+
+        // Copy Promotional Announcement
+        function copyPromoPost() {
+            const text = `📢 نداء لكل مواطن حريص على مصلحة وطنه وحماية عائلته!\n\nهل لاحظت غلاءً مبالغاً فيه في الأسعار؟ أو صادفت سلعاً منتهية الصلاحية أو بضاعة مغشوشة في السوق؟ 🛑\n\nلأن حماية المستهلك مسؤوليتنا جميعاً، أطلقنا منصة بلاغات حماية المستهلك لتكون صوتك المباشر لتوثيق البلاغات والمخالفات.\n\n🔗 رابط تقديم البلاغ الرسمي: https://forms.gle/m2tHTgmDm7NjXiyP7\n\n📐 إعداد: أ. هناء عسكر | 💻 تصميم وبرمجة: م. محمد الدروقي\nبلغ ولا تسكت.. صوتك يفرق لحماية الأسواق!`;
+            navigator.clipboard.writeText(text);
+            alert('تم نسخ منشور التوعية ورابط المنظومة بنجاح! يمكنك لصقه وتعميمه فوراً.');
+        }
+    </script>
+</body>
+</html>
